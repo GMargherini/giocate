@@ -69,7 +69,7 @@ def new_game():
 @ui.page("/")
 def dashboard():
     months = list(set([m["date"].split("-")[1] for m in giocate]))
-    month_values = [sum(g["win"] for m in months if g["date"].split("-")[1] == m) for g in giocate]
+    month_values = [sum(g["win"] for g in giocate if g["date"].split("-")[1] == m) for m in months]
         
     navigation_bar("Giocate")
     with ui.row().classes("w-full"):
