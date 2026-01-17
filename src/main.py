@@ -72,7 +72,7 @@ def dashboard():
     with ui.card().classes("w-full"):
         with ui.row().classes("w-full"):
             tot = sum([i["result"] for i in giocate])
-            perc = sum([i["win"] for i in giocate if i["win"] > 0]) / sum([1 for i in giocate])
+            perc = sum([1 for i in giocate if i["win"] > 0]) / sum([1 for i in giocate])
             wins = sum([i["win"] for i in giocate])
             costs = sum([i["cost"] for i in giocate])
             ui.label(f"Totale: {tot:.2f} €")
