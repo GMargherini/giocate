@@ -68,7 +68,13 @@ def new_game():
 
 @ui.page("/")
 def dashboard():
+    months = list(set([m["date"].split("-")[1] for m in giocate]))
+    month_values = [sum(g["win"] for m in months if g["date"].split("-")[1] == m) for g in giocate]
+        
     navigation_bar("Giocate")
+    with ui.row().classes("w-full"):
+        ui.space()
+        ui.button(icon='add', on_click= lambda: ui.navigate.to(f'/new'))
     with ui.card().classes("w-full"):
         with ui.row().classes("w-full"):
             tot = sum([i["result"] for i in giocate])
@@ -79,9 +85,10 @@ def dashboard():
             ui.label(f"Percentuale Vittorie: {perc:.2f} %")
             ui.label(f"Vincite Totali: {wins:.2f} €")
             ui.label(f"Uscite Totali: {costs:.2f} €")
-        
-    ui.space()
-    ui.fab("add").on('click', lambda: ui.navigate.to('/new')).classes("mx-auto")
+        with ui.row().classes("w-full"):
+          with ui.matplotlib(figsize=(3, 2)).figure as fig:
+              ax = fig.gca()
+              ax.pie(month_values, labels=months)
 
 def navigation_bar(title: str = ''):
     ui.colors(primary='#FAB12F')
