@@ -8,7 +8,4 @@ RUN pip install matplotlib
 COPY src ./app/src
 EXPOSE 8080
 
-RUN useradd app
-USER app
-
 CMD ["python", "/app/src/main.py"]
