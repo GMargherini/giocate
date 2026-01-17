@@ -13,7 +13,7 @@ def games():
     navigation_bar("Lista")
     with ui.row().classes('w-full'):
         ui.space()
-        ui.button(icon='add', on_click= lambda: ui.navigate.to(f'/giocate/new'))
+        ui.button(icon='add', on_click= lambda: ui.navigate.to(f'/new'))
     columns = [
         {'headerName': 'Data', 'field': 'date', 'filter': 'agTextColumnFilter'},
         {'headerName': 'Spesa', 'field': 'cost'},
@@ -47,7 +47,7 @@ def new_game():
             for g in giocate:
                 writer.writerow(g)
             
-        ui.navigate.to("/giocate/list")
+        ui.navigate.to("/")
 
         
     game = dict()
@@ -81,7 +81,7 @@ def dashboard():
             ui.label(f"Uscite Totali: {costs:.2f} €")
         
     ui.space()
-    ui.fab("add").on('click', lambda: ui.navigate.to('/giocate/new')).classes("mx-[95%]")
+    ui.fab("add").on('click', lambda: ui.navigate.to('/new')).classes("mx-[95%]")
 
 def navigation_bar(title: str = ''):
     ui.colors(primary='#FAB12F')
@@ -90,8 +90,8 @@ def navigation_bar(title: str = ''):
     icons = 'text-3xl p-1 w-[16dp] rounded hover:bg-orange-700 hover:cursor-pointer'
     with ui.header(elevated=True).classes('text-white bg-[#FA812F] items-center h-[60px] justify-between'):
         ui.label(title).classes('text-2xl truncate flex-[2] hover:cursor-default').tooltip(title)
-        ui.icon('home').on('click', lambda: ui.navigate.to(f'/giocate')).classes(icons).tooltip('Home')
-        ui.icon('menu').on('click', lambda: ui.navigate.to(f'/giocate/list')).classes(icons).tooltip('Lista')
+        ui.icon('home').on('click', lambda: ui.navigate.to(f'/')).classes(icons).tooltip('Home')
+        ui.icon('menu').on('click', lambda: ui.navigate.to(f'/list')).classes(icons).tooltip('Lista')
 
 def main():
     global giocate
