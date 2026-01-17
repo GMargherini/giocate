@@ -7,7 +7,7 @@ import csv
 
 global giocate
 
-@ui.page("/giocate/list")
+@ui.page("/list")
 def games():
     global giocate
     navigation_bar("Lista")
@@ -27,7 +27,7 @@ def games():
         .classes('w-full h-[80vh]')
 
 
-@ui.page("/giocate/new")
+@ui.page("/new")
 def new_game():
     global giocate
     navigation_bar("Nuova")
@@ -66,7 +66,7 @@ def new_game():
         ui.button(icon='save', on_click= lambda: add_game(**game))
 
 
-@ui.page("/giocate")
+@ui.page("/")
 def dashboard():
     navigation_bar("Giocate")
     with ui.card().classes("w-full"):
