@@ -85,18 +85,18 @@ def dashboard():
         ui.space()
         ui.button(icon='add', on_click= lambda: ui.navigate.to(f'/new'))
     with ui.card().classes("w-full"):
-        with ui.row().classes("w-full"):
-            ui.label(f"Totale: {tot:.2f} €")
-            ui.label(f"Percentuale Vittorie: {perc:.2f} %")
-            ui.label(f"Vincite Totali: {wins:.2f} €")
-            ui.label(f"Uscite Totali: {costs:.2f} €")
-        with ui.row().classes("w-full"):
-            with ui.matplotlib(figsize=(3, 2)).figure as fig:
+        with ui.row(align_items="center").classes("flex-auto"):
+            ui.label(f"Totale: {tot:.2f} €").classes("flex-auto")
+            ui.label(f"Percentuale Vittorie: {perc:.2f} %").classes("flex-auto")
+            ui.label(f"Vincite Totali: {wins:.2f} €").classes("flex-auto")
+            ui.label(f"Uscite Totali: {costs:.2f} €").classes("flex-auto")
+        with ui.row(align_items="center").classes("w-full"):
+            with ui.matplotlib(figsize=(3, 2)).classes("flex-auto").figure as fig:
                 ax = fig.gca()
                 ax.set_title("Vittorie per mese")
                 ax.pie(month_values, labels=months)
 
-            with ui.matplotlib(figsize=(3, 2)).figure as fig:
+            with ui.matplotlib(figsize=(3, 2)).classes("flex-auto").figure as fig:
                 ax = fig.gca()
                 ax.set_title("Numero vittorie")
                 ax.pie(win_lose, labels=["Vincite", "Perdite"], colors=["lightgreen", "#F67280"])
