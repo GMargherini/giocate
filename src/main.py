@@ -1,5 +1,8 @@
 from nicegui import ui
 import matplotlib.pyplot as plt
+from pages.games import games_page
+from pages.game import new_game_page
+from pages.dashboard import dashboard_page
 import numpy as np
 import sys
 import os
@@ -9,98 +12,19 @@ global giocate
 
 @ui.page("/list")
 def games():
-    global giocate
     navigation_bar("Lista")
-    with ui.row().classes('w-full'):
-        ui.space()
-        ui.button(icon='add', on_click= lambda: ui.navigate.to(f'/new'))
-    columns = [
-        {'headerName': 'Data', 'field': 'date', 'filter': 'agTextColumnFilter', 'flex': 2, 'suppressMovable': True},
-        {'headerName': 'Spesa', 'field': 'cost', 'flex': 1, 'suppressMovable': True},
-        {'headerName': 'Vincita', 'field': 'win', 'flex': 1, 'suppressMovable': True},
-        {'headerName': 'Totale', 'field': 'result', 'flex': 1, 'suppressMovable': True, 'cellClassRules': {
-            'bg-red-300': 'x < 0',
-            'bg-green-300': 'x > 0',
-        }}
-    ]
-    table = ui.aggrid({'columnDefs': columns, 'rowData': giocate}, theme='quartz') \
-        .classes('w-full h-[80vh]')
-
+    games_page(giocate)
 
 @ui.page("/new")
 def new_game():
-    global giocate
     navigation_bar("Nuova")
-    def add_game(date, cost, win):
-        with open("giocate.csv", "w") as csv_file:
-            fieldnames = ['date', 'cost', 'win', 'result']
-            writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
-
-            writer.writeheader()
-
-            giocate.append({
-                "date": date,
-                "cost": cost,
-                "win": win,
-                "result": win - cost
-            })
-            for g in giocate:
-                writer.writerow(g)
-            
-        ui.navigate.to("/")
-
-        
-    game = dict()
-    with ui.card().classes('w-full'):
-        with ui.row():
-            ui.label("Data")
-            ui.date_input().on_value_change(lambda e: game.update({"date": e.value}))
-        with ui.row():
-            ui.label("Costo")
-            ui.number().on_value_change(lambda e: game.update({"cost": e.value}))
-        with ui.row():
-            ui.label("Vincita")
-            ui.number().on_value_change(lambda e: game.update({"win": e.value}))
-    with ui.row().classes('w-full'):
-        ui.space()
-        ui.button(icon='save', on_click= lambda: add_game(**game))
-
+    new_game_page(giocate)
 
 @ui.page("/")
 def dashboard():
-
-    months = list(set([m["date"].split("-")[1] for m in giocate]))
-    month_values = [sum(g["win"] for g in giocate if g["date"].split("-")[1] == m) for m in months]
-    
-    tot = sum([i["result"] for i in giocate])
-    perc = sum([1 for i in giocate if i["result"] > 0]) / sum([1 for i in giocate]) * 100
-    wins = sum([i["win"] for i in giocate])
-    costs = sum([i["cost"] for i in giocate])
-
-    win_lose = [perc, 100 - perc]
-
     navigation_bar("Giocate")
-
-    with ui.row().classes("w-full"):
-        ui.space()
-        ui.button(icon='add', on_click= lambda: ui.navigate.to(f'/new'))
-    with ui.card().classes("w-full"):
-        with ui.row(align_items="center").classes("flex-auto"):
-            ui.label(f"Totale: {tot:.2f} €").classes("flex-auto")
-            ui.label(f"Percentuale Vittorie: {perc:.2f} %").classes("flex-auto")
-            ui.label(f"Vincite Totali: {wins:.2f} €").classes("flex-auto")
-            ui.label(f"Uscite Totali: {costs:.2f} €").classes("flex-auto")
-        with ui.row(align_items="center").classes("w-full"):
-            with ui.matplotlib(figsize=(3, 2)).classes("flex-auto").figure as fig:
-                ax = fig.gca()
-                ax.set_title("Vittorie per mese")
-                ax.pie(month_values, labels=months)
-
-            with ui.matplotlib(figsize=(3, 2)).classes("flex-auto").figure as fig:
-                ax = fig.gca()
-                ax.set_title("Numero vittorie")
-                ax.pie(win_lose, labels=["Vincite", "Perdite"], colors=["lightgreen", "#F67280"])
-
+    dashboard_page(giocate)
+    
 def navigation_bar(title: str = ''):
     ui.colors(primary='#FAB12F')
     ui.query('body').classes('bg-orange-50')

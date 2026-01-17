@@ -1,0 +1,33 @@
+from nicegui import ui
+
+def dashboard_page(giocate):
+    months = list(set([m["date"].split("-")[1] for m in giocate]))
+    month_values = [sum(g["win"] for g in giocate if g["date"].split("-")[1] == m) for m in months]
+    
+    tot = sum([i["result"] for i in giocate])
+    perc = sum([1 for i in giocate if i["result"] > 0]) / sum([1 for i in giocate]) * 100
+    wins = sum([i["win"] for i in giocate])
+    costs = sum([i["cost"] for i in giocate])
+
+    win_lose = [perc, 100 - perc]
+
+    with ui.row().classes("w-full"):
+        ui.space()
+        ui.button(icon='add', on_click= lambda: ui.navigate.to(f'/new'))
+    with ui.card().classes("w-full"):
+        with ui.row(align_items="center").classes("flex-auto"):
+            ui.label(f"Totale: {tot:.2f} €").classes("flex-auto")
+            ui.label(f"Percentuale Vittorie: {perc:.2f} %").classes("flex-auto")
+            ui.label(f"Vincite Totali: {wins:.2f} €").classes("flex-auto")
+            ui.label(f"Uscite Totali: {costs:.2f} €").classes("flex-auto")
+        with ui.row(align_items="center").classes("w-full"):
+            with ui.matplotlib(figsize=(3, 2)).classes("flex-auto").figure as fig:
+                ax = fig.gca()
+                ax.set_title("Vittorie per mese")
+                ax.pie(month_values, labels=months)
+
+            with ui.matplotlib(figsize=(3, 2)).classes("flex-auto").figure as fig:
+                ax = fig.gca()
+                ax.set_title("Numero vittorie")
+                ax.pie(win_lose, labels=["Vincite", "Perdite"], colors=["lightgreen", "#F67280"])
+
