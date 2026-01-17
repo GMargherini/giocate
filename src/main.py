@@ -81,7 +81,7 @@ def dashboard():
             ui.label(f"Uscite Totali: {costs:.2f} €")
         
     ui.space()
-    ui.fab("add").on('click', lambda: ui.navigate.to('/new')).classes("mx-[95%]")
+    ui.fab("add").on('click', lambda: ui.navigate.to('/new')).classes("mx-[90%]")
 
 def navigation_bar(title: str = ''):
     ui.colors(primary='#FAB12F')
