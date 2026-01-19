@@ -1,8 +1,7 @@
-from typing import List, Dict, Any
+from typing import TypedDict
 
-class Game:
-
-    def __init__(self, date: str, cost: float, win: float):
-        self.date = date
-        self.cost = cost
-        self.win = win
+class Game(TypedDict):
+    date: str
+    cost: float
+    win: float
+    result: float

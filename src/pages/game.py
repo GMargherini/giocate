@@ -1,21 +1,21 @@
 from nicegui import ui
+from data.game import Game
 import csv
 
 def add_game(date, cost, win):
-    with open("giocate.csv", "w") as csv_file:
+    with open("giocate.csv", "a") as csv_file:
         fieldnames = ['date', 'cost', 'win', 'result']
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
-        writer.writeheader()
-
-        giocate.append({
-            "date": date,
-            "cost": cost,
-            "win": win,
-            "result": win - cost
-        })
-        for g in giocate:
-            writer.writerow(g)
+        g = Game(
+            {
+                "date": date,
+                "cost": cost,
+                "win": win,
+                "result": win - cost
+            }
+        )
+        writer.writerow(g)
         
     ui.navigate.to("/")
 

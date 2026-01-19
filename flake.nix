@@ -24,6 +24,7 @@
             nicegui
             numpy
           ]))
+          pkgs.ruff
         ];
         shellHook = ''
           python --version

@@ -1,10 +1,10 @@
 from nicegui import ui
-import csv
+from data.game import Game
 
-def games_page(giocate):
+def games_page(giocate: list[Game]):
     with ui.row().classes('w-full'):
         ui.space()
-        ui.button(icon='add', on_click= lambda: ui.navigate.to(f'/new'))
+        ui.button(icon='add', on_click= lambda: ui.navigate.to('/new'))
     columns = [
         {'headerName': 'Data', 'field': 'date', 'filter': 'agTextColumnFilter', 'flex': 2, 'suppressMovable': True},
         {'headerName': 'Spesa', 'field': 'cost', 'flex': 1, 'suppressMovable': True},
@@ -14,5 +14,4 @@ def games_page(giocate):
             'bg-green-300': 'x > 0',
         }}
     ]
-    table = ui.aggrid({'columnDefs': columns, 'rowData': giocate}, theme='quartz') \
-        .classes('w-full h-[80vh]')
+    table = ui.aggrid({'columnDefs': columns, 'rowData': giocate}, theme='quartz').classes('w-full h-[80vh]')

@@ -1,6 +1,7 @@
 from nicegui import ui
+from data.game import Game
 
-def dashboard_page(giocate):
+def dashboard_page(giocate: list[Game]):
     months = list(set([m["date"].split("-")[1] for m in giocate]))
     month_values = [sum(g["win"] for g in giocate if g["date"].split("-")[1] == m) for m in months]
     
@@ -13,7 +14,7 @@ def dashboard_page(giocate):
 
     with ui.row().classes("w-full"):
         ui.space()
-        ui.button(icon='add', on_click= lambda: ui.navigate.to(f'/new'))
+        ui.button(icon='add', on_click= lambda: ui.navigate.to('/new'))
     with ui.card().classes("w-full"):
         with ui.row(align_items="center").classes("flex-auto"):
             ui.label(f"Totale: {tot:.2f} €").classes("flex-auto")
