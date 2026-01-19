@@ -6,7 +6,7 @@ def dashboard_page(giocate: list[Game]):
     month_values = [sum(g["win"] for g in giocate if g["date"].split("-")[1] == m) for m in months]
     
     tot = sum([i["result"] for i in giocate])
-    perc = sum([1 for i in giocate if i["result"] > 0]) / sum([1 for i in giocate]) * 100
+    perc = sum([1 for i in giocate if i["result"] > 0]) / sum([1 for _ in giocate]) * 100
     wins = sum([i["win"] for i in giocate])
     costs = sum([i["cost"] for i in giocate])
 

@@ -18,13 +18,13 @@ def games():
 def new_game():
     global giocate
     navigation_bar("Nuova")
-    new_game_page(giocate)
+    new_game_page()
 
 @ui.page("/")
 def dashboard():
     global giocate
     reload_data()
-    navigation_bar("Giocate")
+    navigation_bar("🎰 Giocate")
     dashboard_page(giocate)
     
 def navigation_bar(title: str = ''):

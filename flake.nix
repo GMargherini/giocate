@@ -25,6 +25,7 @@
             numpy
           ]))
           pkgs.ruff
+          pkgs.pyright
         ];
         shellHook = ''
           python --version

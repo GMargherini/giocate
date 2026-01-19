@@ -19,7 +19,7 @@ def add_game(date, cost, win):
         
     ui.navigate.to("/")
 
-def new_game_page(giocate):        
+def new_game_page():        
     game = dict()
     with ui.card().classes('w-full'):
         with ui.row():

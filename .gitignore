@@ -4,3 +4,6 @@ build
 dist
 recipes.spec
 giocate.csv
+# Ignore Python cache files
+__pycache__/
+*.pyc
