@@ -25,14 +25,14 @@ def dashboard_page(giocate: list[Game]):
         ui.button(icon='add', on_click= lambda: ui.navigate.to('/new'))
     with ui.card(align_items="center").classes("w-full"):
         with ui.grid(columns=2).classes("flex-auto text-xl text-center"):
-            ui.label(f"Totale:").classes("flex-auto")
-            ui.label(f"Percentuale Vittorie:").classes("flex-auto")
-            ui.label(f"{tot:.2f} €").classes("flex-auto")
-            ui.label(f"{perc:.2f} %").classes("flex-auto")
-            ui.label(f"Vincite Totali:").classes("flex-auto")
-            ui.label(f"Uscite Totali:").classes("flex-auto")
-            ui.label(f"{wins:.2f} €").classes("flex-auto")
-            ui.label(f"{costs:.2f} €").classes("flex-auto")
+            ui.label(f"Totale:").classes("text-base")
+            ui.label(f"Percentuale Vittorie:").classes("text-base")
+            ui.label(f"{tot:.2f} €")
+            ui.label(f"{perc:.2f} %")
+            ui.label(f"Vincite Totali:").classes("text-base")
+            ui.label(f"Uscite Totali:").classes("text-base")
+            ui.label(f"{wins:.2f} €")
+            ui.label(f"{costs:.2f} €")
     with ui.card().classes("w-full"):
         with ui.row(align_items="center").classes("w-full"):
             with ui.matplotlib(figsize=(3, 2)).classes("flex-auto").figure as fig:
