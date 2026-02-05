@@ -1,11 +1,12 @@
 from nicegui import ui
 import datetime
-import matplotlib.pyplot as plt
 from data.game import Game
 
 def dashboard_page(giocate: list[Game]):
     months = list(set([m["date"].split("-")[1] for m in giocate]))
     month_values = [sum(g["win"] for g in giocate if g["date"].split("-")[1] == m) for m in months]
+    months_all = filter(lambda x: x[1] != 0,zip(months, month_values))
+    months, month_values = zip(*months_all)
 
     weekdays = ["lun", "mar", "mer", "gio", "ven", "sab", "dom"]
     weekday_values = [sum(g["win"] for g in giocate if datetime.datetime.strptime(g["date"], "%Y-%m-%d").weekday() == wd) for wd in range(0,7)]
